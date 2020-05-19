@@ -49,18 +49,3 @@ func TestMaxHeap_Insert(t *testing.T) {
 	h.Insert(42)
 	assert(h.String(), "[42 16 10 14 15 9 3 2 8 1 7]")
 }
-
-func TestMinHeap_Merge(t *testing.T) {
-	m := []int{1, 3, 5, 7}
-	n := []int{2, 4, 6, 8}
-	h := MinBuild(nil)
-	for _, x := range m {
-		h.Insert(x)
-	}
-	for _, x := range n {
-		h.Insert(x)
-	}
-	for i := h.Size(); i > 0; i-- {
-		fmt.Printf("%v", h.Extract())
-	}
-}
