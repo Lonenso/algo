@@ -19,6 +19,12 @@ func TestMergeLinkedList(t *testing.T) {
 	c.Output()
 }
 
+func TestShuffleLinkedList(t *testing.T) {
+	a := generateLinkedList(20)
+	c := shuffleLinkedList(a)
+	c.Output()
+}
+
 func generateLinkedList(N int) *Node {
 	head := &Node{}
 	res := head

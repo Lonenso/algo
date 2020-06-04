@@ -1,6 +1,10 @@
 package ch07
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 func mergesort(a []int, p int, r int) {
 	if p < r {
@@ -51,9 +55,10 @@ func (n *Node) String() string {
 func (n *Node) Output() {
 	t := n
 	for t != nil {
-		fmt.Printf("%v\n", t)
+		fmt.Printf("%v ", t)
 		t = t.next
 	}
+	fmt.Println()
 }
 
 func mergesortLinkedList(a *Node) *Node {
@@ -80,6 +85,49 @@ func mergeLinkedList(left *Node, right *Node) *Node {
 	res := head
 	for left != nil && right != nil {
 		if left.val < right.val {
+			res.next = left
+			left = left.next
+		} else {
+			res.next = right
+			right = right.next
+		}
+		res = res.next
+	}
+	if left != nil {
+		res.next = left
+	}
+	if right != nil {
+		res.next = right
+	}
+	return head.next
+}
+
+func shuffleLinkedList(a *Node) *Node {
+	if a == nil || a.next == nil {
+		return a
+	}
+	slow := a
+	fast := a.next.next
+	for fast != nil && fast.next != nil {
+		fast = fast.next.next
+		slow = slow.next
+	}
+
+	left := a
+	right := slow.next
+	slow.next = nil
+	left = shuffleLinkedList(left)
+	right = shuffleLinkedList(right)
+	return randomMergeLinkedList(left, right)
+}
+
+func randomMergeLinkedList(left *Node, right *Node) *Node {
+	head := &Node{}
+	res := head
+	for left != nil && right != nil {
+		rand.Seed(time.Now().UnixNano())
+		r := rand.Intn(2)
+		if r == 0 {
 			res.next = left
 			left = left.next
 		} else {
